@@ -1,0 +1,2 @@
+#Ignora archivos del Framework Express node:modules
+/node_modules
