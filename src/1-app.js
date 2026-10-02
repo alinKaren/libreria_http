@@ -1,6 +1,8 @@
 
 // Importa el framework Express para la creación y gestión del servidor HTTP
 import express from "express";
+import conectarBaseDatos from "./config/conexionDB.js";
+
 
 // Crea una instancia proncipal de la aplicación Express llamada 'app'
 const app = express();
@@ -12,7 +14,7 @@ const app = express();
 
 app.use(express.json());
 
-
+/*
 // Simula una base de datos temporal usando un arreglo de objetos con una lista de libros
 const listaLibros = [
     {
@@ -25,12 +27,29 @@ const listaLibros = [
         titulo: 'Don Quijote',
     }
 ];
-
+*/
 
 // Ruta GET ('/'): Endpoint raíz-principal para verificar el estado o bienvenida del servidor
+
+const db =await conectarBaseDatos();
+
+
+db.on('error', (e) => {
+  console.log("Error en la conexion", error);
+});
+
+db.once ('open', () =>{
+  console.log ("Conexion a la base de datos exitosa");
+});
+
+
+
+
 app.get('/', (req,res)=>{
   res.status(200).send('Formación Node + Express + MonngoDB con servidor Express');
 });
+
+
 
 // Ruta GET para '/libros': 
 // Devuelve la lista completa de libros en formato JSON 
@@ -71,8 +90,6 @@ app.post('/libros', (req,res)=>{
 listaLibros.push(req.body);
 res.status(201).send('Libro registrado correctamente');
 });
-
-
 
 
 //Actualización del libro solo en la propiedad titulo
