@@ -2,17 +2,29 @@
 // Importa el framework Express para la creación y gestión del servidor HTTP
 import express from "express";
 import conectarBaseDatos from "./config/conexionDB.js";
+import e from "express";
 
 
 // Crea una instancia proncipal de la aplicación Express llamada 'app'
 const app = express();
 
-
-
 // Middleware: Permite que nuestra aplicación reciba e interprete datos en formato JSON 
 // (Obligatorio para que 'req.body' funcione en las peticiones POST, PUT O PATCH)
 
 app.use(express.json());
+//Se ejecuta la función conectarBaseDatos() de conexionDb.js
+const db =await conectarBaseDatos();
+
+//Escucha todo el tiempo, si la base de datos sufre un error avisara 
+db.on('error', (e) => {
+  console.log("Error en la conexion", error);
+});
+
+//once escucha un evento de apertura (open) una sola vez y envia el mensaje. 
+db.once ('open', () =>{
+  console.log ("Conexion a la base de datos exitosa");
+});
+
 
 /*
 // Simula una base de datos temporal usando un arreglo de objetos con una lista de libros
@@ -30,20 +42,6 @@ const listaLibros = [
 */
 
 // Ruta GET ('/'): Endpoint raíz-principal para verificar el estado o bienvenida del servidor
-
-const db =await conectarBaseDatos();
-
-
-db.on('error', (e) => {
-  console.log("Error en la conexion", error);
-});
-
-db.once ('open', () =>{
-  console.log ("Conexion a la base de datos exitosa");
-});
-
-
-
 
 app.get('/', (req,res)=>{
   res.status(200).send('Formación Node + Express + MonngoDB con servidor Express');
