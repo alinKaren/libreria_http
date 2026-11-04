@@ -1,18 +1,26 @@
+ 
+ /****(CON EXPRESS)**** CREACION DE SERVIDOR LOCAL Y GESTION DEL SERVIDOR HTTP 
+ * ---------------------------------------------------------
+ */
 
-// Importa el framework Express para la creación y gestión del servidor HTTP
+//framework (estructura base predefinida sobre la cual construyes tu aplicación. No solo te da herramientas, sino que te impone una arquitectura,
+//  unas reglas y una forma específica de organizar tus archivos.) de Node.js 
+// diseñado específicamente para crear servidores web y APIs de forma rápida y ordenada.
+
+//importamos express en nuestra app  del paquete express
 import express from "express";
 import conectarBaseDatos from "./config/conexionDB.js";
-import e from "express";
+import libroModel from "./models/libros.js";
 
 
 // Crea una instancia proncipal de la aplicación Express llamada 'app'
 const app = express();
 
-// Middleware: Permite que nuestra aplicación reciba e interprete datos en formato JSON 
-// (Obligatorio para que 'req.body' funcione en las peticiones POST, PUT O PATCH)
+// Middleware: El middleware es el recepcionista que te pide identificación; si todo está en orden, te deja pasar (next()), y si no, 
+// te niega la entrada (envía un mensaje de error).
 
 app.use(express.json());
-//Se ejecuta la función conectarBaseDatos() de conexionDb.js
+//Ejecuta la función conectarBaseDatos() de conexionDb.js
 const db =await conectarBaseDatos();
 
 //Escucha todo el tiempo, si la base de datos sufre un error avisara 
@@ -42,7 +50,6 @@ const listaLibros = [
 */
 
 // Ruta GET ('/'): Endpoint raíz-principal para verificar el estado o bienvenida del servidor
-
 app.get('/', (req,res)=>{
   res.status(200).send('Formación Node + Express + MonngoDB con servidor Express');
 });
@@ -51,8 +58,13 @@ app.get('/', (req,res)=>{
 
 // Ruta GET para '/libros': 
 // Devuelve la lista completa de libros en formato JSON 
-app.get('/libros',(req,res) =>{
-res.status(200).json(listaLibros);
+//app.get('/libros',(req,res) =>{
+  app.get('/libros',async (req,res) =>{
+//res.status(200).json(listaLibros); lista de memoria volatil
+//find es un filtro en este caso lo dejaremos vacio 
+const listalibrosModel = await libroModel.find({});
+//  res.status(200).json(listalibros);
+  res.status(200).json(listalibrosModel);
 });
 
 
@@ -60,13 +72,12 @@ res.status(200).json(listaLibros);
 // Devuelve el índice del arreglo (0, 1, 2...) o -1 si no existe
 const buscarLibro = (id) => {
     return listaLibros.findIndex((libro)=> libro.id ===(id));
-
 }
 
-// Ruta GET ('/libros/:id'): Consulta un libro por su parámetro de URL (:id)
+//se ocupa app de la instancia de express y se llama el método GET Consultando un libro por su parámetro de URL (:id)
 app.get('/libros/:id',(req,res)=>{
 const id =Number(req.params.id);
-//invoca el metodo buscarLibro
+//invoca el método buscarLibro
 const index = buscarLibro(id);
 
 
@@ -96,7 +107,7 @@ app.put('/libros/:id',(req,res) =>{
     const index = buscarLibro(id);
 
     listaLibros[index].titulo =req.body.titulo;
-    //trae nuevamente la lista para que se verifique si hubo una actuualizacion 
+    //trae nuevamente la lista para que se verifique si hubo una actualizacion 
     res.status(200).json(listaLibros);
 
 });

@@ -1,7 +1,6 @@
 // Importa la instancia de la aplicación Express del archivo app.js
 import app from './src/1-app.js';  
 
-
 // Define el puerto en el que vivirá nuestro servidor.
 // Guardarlo en una constante es una buena práctica porque facilita cambiarlo 
 // en un solo lugar si en el futuro necesitamos usar otro puerto (ej. 8080).

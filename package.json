@@ -1,14 +1,14 @@
 {
-  "name": "api-aula1",
+  "name": "api-biblioteca-Express-MongoDB-Node.js",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Módulo con métodos http con framework Express",
+  "main": "1-app.js",
   "type": "module",
   "scripts": {
     "dev": "npx nodemon 2-server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["api", "express", "mongodb", "nodejs"],
+  "author": "Alin Meneses",
   "license": "ISC",
   "dependencies": {
     "express": "^5.2.1",
