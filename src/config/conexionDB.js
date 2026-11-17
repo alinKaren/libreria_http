@@ -1,4 +1,4 @@
-//conectar una base de datos MongoDB con la API 
+// Conectar una base de datos MongoDB con la API 
 // utilizando Mongoose (que actúa como un ODM) herramienta de programación que actúa como  traductor entre el código de la aplicación y una base de datos NoSQL basada en documentos (como MongoDB).
 // y gestionar los errores de esa conexión.
 

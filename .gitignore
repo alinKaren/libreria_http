@@ -1,2 +1,4 @@
-#Ignora archivos del Framework Express node:modules
-/node_modules
+#Ignora archivos del Framework Express node_modules
+node_modules
+#Se instaló previamente dotenv en terminal: sirve para manejar las variables de entorno (como contraseñas o claves secretas).
+.env
